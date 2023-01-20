@@ -1,4 +1,4 @@
-AUTO-FAUCET + AUTO-MINT
+AUTO-FAUCET + AUTO-MINT+AUTO-BURN
 touch /root/logfile.log
 nano /etc/crontab
 0 0 * * * root echo "ваша_почта@gmail.com" | ironfish faucet | tee -a /root/logfile.log
@@ -16,3 +16,18 @@ nano /etc/crontab
 0 0 * * SAT echo y | ironfish wallet:mint -a 0.1 -f "$IRON" -m $IRONFISH_WALLET -n $IRONFISH_WALLET -o 0.00000001 | tee -a /root/logfile.log
 Перезагружаем CRON:
 systemctl enable cron && systemctl start cron && systemctl status cron
+
+AUTO-BURN
+ironfish wallet:balances
+Account: shoebillc
+ Asset Name Asset Id                                                         Confirmed Balance 
+ ────────── ──────────────────────────────────────────────────────────────── ───────────────── 
+ shoebillc  277530560bd2cab03******* 0.89999999
+ $IRON      d7c86706f5817aa71******* 40.00001171
+ 
+nano /etc/crontab 
+Добавить:
+0 0 * * SAT echo y | ironfish wallet:burn -a 0.00000001 -f "$IRON" -i 277530560bd2cab03******* -o 0.00000001
+Перезагружаем CRON:
+systemctl enable cron && systemctl start cron && systemctl status cron
+
