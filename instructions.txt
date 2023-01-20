@@ -1,0 +1,18 @@
+AUTO-FAUCET + AUTO-MINT
+touch /root/logfile.log
+nano /etc/crontab
+0 0 * * * root echo "ваша_почта@gmail.com" | ironfish faucet | tee -a /root/logfile.log
+CTRL+O
+CTRL+X
+systemctl enable cron && systemctl start cron && systemctl status cron
+Смотреть:
+tail -F /root/logfile.log
+
+AUTO-MINT
+CRON:
+nano /etc/crontab 
+Минт - период выполения каждую субботу
+Добавить:
+0 0 * * SAT echo y | ironfish wallet:mint -a 0.1 -f "$IRON" -m $IRONFISH_WALLET -n $IRONFISH_WALLET -o 0.00000001 | tee -a /root/logfile.log
+Перезагружаем CRON:
+systemctl enable cron && systemctl start cron && systemctl status cron
